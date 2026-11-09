@@ -1,4 +1,4 @@
-import { supabase, supabaseConfigurado } from "./supabase-client.js";
+import { supabase, supabaseConfigurado, supabaseConfigError } from "./supabase-client.js";
 
 const views = [...document.querySelectorAll("[data-view]")];
 const titulo = document.querySelector("#auth-titulo");
@@ -47,7 +47,7 @@ function erroEmPortugues(error) {
 
 function exigirSupabase() {
     if (supabaseConfigurado) return true;
-    mostrarMensagem("O Supabase ainda não foi configurado. Siga os passos do arquivo SUPABASE-SETUP.md e preencha supabase-config.js.", "info");
+    mostrarMensagem(`${supabaseConfigError} Consulte SUPABASE-SETUP.md e configure supabase-config.js.`, "info");
     return false;
 }
 
@@ -187,7 +187,7 @@ const tipoCallback = new URLSearchParams(window.location.hash.slice(1)).get("typ
 mudarModo(parametros.get("mode") || (tipoCallback === "recovery" ? "reset" : "login"), false);
 
 if (parametros.get("config") === "missing" || !supabaseConfigurado) {
-    mostrarMensagem("O Supabase ainda não foi configurado. Siga SUPABASE-SETUP.md antes de usar a autenticação.", "info");
+    mostrarMensagem(`${supabaseConfigError} Consulte SUPABASE-SETUP.md antes de usar a autenticação.`, "info");
 }
 
 if (supabaseConfigurado) {

@@ -4,15 +4,15 @@ O app usa Supabase Auth para autenticação por e-mail e senha e a tabela `publi
 
 ## Preparar o projeto
 
-1. Crie um projeto no Supabase e copie a Project URL e a chave pública em **Project Settings > API Keys**.
+1. Crie um projeto no Supabase e copie a Project URL e a chave **Publishable** (`sb_publishable_`) em **Project Settings > API Keys**. A chave legada `anon` também é aceita. Não use `service_role` nem `sb_secret_` no navegador.
 2. No **SQL Editor**, execute todo o conteúdo de `supabase-schema.sql`. A tabela ativa RLS e limita leitura, inclusão, alteração e remoção ao `user_id` da sessão autenticada.
 3. Em **Authentication > URL Configuration**, defina o Site URL como `https://maiquim00.github.io/Controle-Financeiro-2.0/`.
-4. Adicione às Redirect URLs `https://maiquim00.github.io/Controle-Financeiro-2.0/index.html` e `https://maiquim00.github.io/Controle-Financeiro-2.0/auth.html**`.
+4. Adicione às Redirect URLs `https://maiquim00.github.io/Controle-Financeiro-2.0/**`.
 5. Em **Authentication > Providers**, mantenha Email habilitado. Se a confirmação de e-mail estiver ativa, o cadastro pedirá que a pessoa confirme o endereço antes de entrar.
 
 ## Conectar o site
 
-Edite `supabase-config.js` e substitua os dois valores de exemplo pela Project URL e pela chave pública. Esses valores são usados no navegador, então o arquivo não deve conter chaves secretas. Publique o arquivo atualizado no repositório; o GitHub Pages fará o novo deploy.
+Edite `supabase-config.js` e substitua os valores de exemplo por `SUPABASE_URL` e `SUPABASE_PUBLISHABLE_KEY`. Se sua configuração existente usa `SUPABASE_ANON_KEY`, ela continua compatível. Esses valores são usados no navegador; nunca inclua chaves `service_role` ou `sb_secret_` no repositório.
 
 O dashboard redireciona sessões não autenticadas para `auth.html`. Os dados só são lidos e gravados na tabela Supabase depois do login. A segurança por usuário é aplicada no banco pelas políticas RLS, não apenas por filtros da interface.
 
