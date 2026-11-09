@@ -86,8 +86,15 @@ document.querySelector("#form-login").addEventListener("submit", async (evento) 
     if (!exigirSupabase()) return;
 
     definirEnvio(formulario, true, "Entrando...");
-    const { error } = await supabase.auth.signInWithPassword({ email, password: senha });
-    definirEnvio(formulario, false);
+    let resultado;
+    try {
+        resultado = await supabase.auth.signInWithPassword({ email, password: senha });
+    } catch (error) {
+        resultado = { error };
+    } finally {
+        definirEnvio(formulario, false);
+    }
+    const { error } = resultado;
     if (error) return mostrarMensagem(erroEmPortugues(error));
     window.location.replace("index.html");
 });
@@ -106,15 +113,22 @@ document.querySelector("#form-cadastro").addEventListener("submit", async (event
     if (!exigirSupabase()) return;
 
     definirEnvio(formulario, true, "Criando conta...");
-    const { data, error } = await supabase.auth.signUp({
-        email,
-        password: senha,
-        options: {
-            data: { full_name: nome },
-            emailRedirectTo: new URL("index.html", window.location.href).href
-        }
-    });
-    definirEnvio(formulario, false);
+    let resultado;
+    try {
+        resultado = await supabase.auth.signUp({
+            email,
+            password: senha,
+            options: {
+                data: { full_name: nome },
+                emailRedirectTo: new URL("index.html", window.location.href).href
+            }
+        });
+    } catch (error) {
+        resultado = { error };
+    } finally {
+        definirEnvio(formulario, false);
+    }
+    const { data, error } = resultado;
     if (error) return mostrarMensagem(erroEmPortugues(error));
     if (data.session) return window.location.replace("index.html");
 
@@ -130,10 +144,17 @@ document.querySelector("#form-recuperacao").addEventListener("submit", async (ev
     if (!exigirSupabase()) return;
 
     definirEnvio(formulario, true, "Enviando...");
-    const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: new URL("auth.html?mode=reset", window.location.href).href
-    });
-    definirEnvio(formulario, false);
+    let resultado;
+    try {
+        resultado = await supabase.auth.resetPasswordForEmail(email, {
+            redirectTo: new URL("auth.html?mode=reset", window.location.href).href
+        });
+    } catch (error) {
+        resultado = { error };
+    } finally {
+        definirEnvio(formulario, false);
+    }
+    const { error } = resultado;
     if (error) return mostrarMensagem(erroEmPortugues(error));
     mostrarMensagem("Se houver uma conta com esse e-mail, você receberá um link para redefinir a senha.", "sucesso");
 });
@@ -148,8 +169,15 @@ document.querySelector("#form-nova-senha").addEventListener("submit", async (eve
     if (!exigirSupabase()) return;
 
     definirEnvio(formulario, true, "Salvando...");
-    const { error } = await supabase.auth.updateUser({ password: senha });
-    definirEnvio(formulario, false);
+    let resultado;
+    try {
+        resultado = await supabase.auth.updateUser({ password: senha });
+    } catch (error) {
+        resultado = { error };
+    } finally {
+        definirEnvio(formulario, false);
+    }
+    const { error } = resultado;
     if (error) return mostrarMensagem(erroEmPortugues(error));
     window.location.replace("index.html");
 });

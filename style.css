@@ -20,6 +20,8 @@ body {
     flex-direction: column;
 }
 
+body.app-guardando > * { visibility: hidden; }
+
 .topo {
     padding: 48px 24px 92px;
     color: #fff;

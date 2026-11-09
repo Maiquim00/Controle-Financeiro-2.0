@@ -94,11 +94,19 @@ function renderizarTransacoes() {
 }
 
 async function carregarTransacoes() {
-    const { data, error } = await supabase
-        .from("transacoes")
-        .select("id, descricao, valor, tipo, categoria, created_at")
-        .eq("user_id", usuario.id)
-        .order("created_at", { ascending: false });
+    let resultado;
+    try {
+        resultado = await supabase
+            .from("transacoes")
+            .select("id, descricao, valor, tipo, categoria, created_at")
+            .eq("user_id", usuario.id)
+            .order("created_at", { ascending: false });
+    } catch {
+        mostrarMensagem("Não foi possível conectar ao Supabase. Confira sua conexão.");
+        return;
+    }
+
+    const { data, error } = resultado;
 
     if (error) {
         mostrarMensagem("Não foi possível carregar suas transações. Confira a configuração do Supabase e as políticas RLS.");
@@ -124,19 +132,27 @@ formulario.addEventListener("submit", async (evento) => {
     botao.disabled = true;
     mostrarMensagem("");
 
-    const { data, error } = await supabase
-        .from("transacoes")
-        .insert({
-        descricao,
-        valor: Math.round(valor * 100) / 100,
-        tipo,
-        categoria,
-        user_id: usuario.id
-        })
-        .select("id, descricao, valor, tipo, categoria, created_at")
-        .single();
+    let resultado;
+    try {
+        resultado = await supabase
+            .from("transacoes")
+            .insert({
+                descricao,
+                valor: Math.round(valor * 100) / 100,
+                tipo,
+                categoria,
+                user_id: usuario.id
+            })
+            .select("id, descricao, valor, tipo, categoria, created_at")
+            .single();
+    } catch {
+        mostrarMensagem("Não foi possível conectar ao Supabase. Confira sua conexão.");
+        botao.disabled = false;
+        return;
+    }
 
     botao.disabled = false;
+    const { data, error } = resultado;
     if (error) {
         mostrarMensagem("Não foi possível salvar a transação. Verifique a tabela e as políticas de acesso do Supabase.");
         return;
@@ -153,12 +169,20 @@ lista.addEventListener("click", async (evento) => {
     if (!botao) return;
 
     botao.disabled = true;
-    const { error } = await supabase
-        .from("transacoes")
-        .delete()
-        .eq("id", botao.dataset.id)
-        .eq("user_id", usuario.id);
+    let resultado;
+    try {
+        resultado = await supabase
+            .from("transacoes")
+            .delete()
+            .eq("id", botao.dataset.id)
+            .eq("user_id", usuario.id);
+    } catch {
+        botao.disabled = false;
+        mostrarMensagem("Não foi possível conectar ao Supabase. Confira sua conexão.");
+        return;
+    }
 
+    const { error } = resultado;
     if (error) {
         botao.disabled = false;
         mostrarMensagem("Não foi possível remover a transação.");
@@ -171,7 +195,15 @@ lista.addEventListener("click", async (evento) => {
 
 botaoSair.addEventListener("click", async () => {
     botaoSair.disabled = true;
-    const { error } = await supabase.auth.signOut();
+    let resultado;
+    try {
+        resultado = await supabase.auth.signOut();
+    } catch {
+        botaoSair.disabled = false;
+        mostrarMensagem("Não foi possível encerrar a sessão. Tente novamente.");
+        return;
+    }
+    const { error } = resultado;
     if (error) {
         botaoSair.disabled = false;
         mostrarMensagem("Não foi possível encerrar a sessão. Tente novamente.");
@@ -195,6 +227,7 @@ async function iniciarDashboard() {
     usuario = data.session.user;
     document.querySelector("#usuario-email").textContent = usuario.email || "Conta conectada";
     await carregarTransacoes();
+    document.body.classList.remove("app-guardando");
 }
 
 iniciarDashboard();
