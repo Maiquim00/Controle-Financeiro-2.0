@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f4f7fb">
+    <meta name="description" content="Acesse sua conta do Controle Financeiro.">
+    <title>Acessar conta | Controle Financeiro</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="auth.js"></script>
+</head>
+<body class="auth-page">
+    <header class="auth-brand">
+        <a href="index.html"><span class="auth-brand-mark" aria-hidden="true">$</span> Controle Financeiro</a>
+    </header>
+
+    <main class="auth-layout">
+        <aside class="auth-aside" aria-label="Controle Financeiro">
+            <div class="auth-aside-content">
+                <p class="marca">FINANÇAS PESSOAIS</p>
+                <h1>Mais clareza para cuidar do seu dinheiro.</h1>
+                <p>Acesse sua conta para acompanhar suas movimentações com privacidade e segurança.</p>
+            </div>
+        </aside>
+
+        <section class="auth-panel" aria-labelledby="auth-titulo">
+            <p class="auth-eyebrow">ÁREA SEGURA</p>
+            <h2 id="auth-titulo">Entre na sua conta</h2>
+            <p id="auth-descricao" class="auth-description">Informe seus dados para continuar.</p>
+            <p id="auth-mensagem" class="auth-message" role="status" aria-live="polite" hidden></p>
+
+            <form id="form-login" class="auth-form" data-view="login" novalidate>
+                <label for="login-email">E-mail</label>
+                <input id="login-email" name="email" type="email" autocomplete="email" placeholder="voce@exemplo.com" maxlength="254" required>
+
+                <label for="login-senha">Senha</label>
+                <div class="auth-password">
+                    <input id="login-senha" name="password" type="password" autocomplete="current-password" minlength="8" required>
+                    <button type="button" data-password-toggle="login-senha" aria-label="Mostrar senha">Mostrar</button>
+                </div>
+
+                <button type="submit">Entrar</button>
+                <div class="auth-links">
+                    <button class="auth-link" type="button" data-mode="recovery">Esqueci minha senha</button>
+                    <button class="auth-link" type="button" data-mode="signup">Criar minha conta</button>
+                </div>
+            </form>
+
+            <form id="form-cadastro" class="auth-form" data-view="signup" novalidate hidden>
+                <label for="cadastro-nome">Nome</label>
+                <input id="cadastro-nome" name="name" type="text" autocomplete="name" maxlength="80" required>
+
+                <label for="cadastro-email">E-mail</label>
+                <input id="cadastro-email" name="email" type="email" autocomplete="email" placeholder="voce@exemplo.com" maxlength="254" required>
+
+                <label for="cadastro-senha">Senha</label>
+                <div class="auth-password">
+                    <input id="cadastro-senha" name="password" type="password" autocomplete="new-password" minlength="8" required>
+                    <button type="button" data-password-toggle="cadastro-senha" aria-label="Mostrar senha">Mostrar</button>
+                </div>
+
+                <label for="cadastro-confirmacao">Confirmar senha</label>
+                <div class="auth-password">
+                    <input id="cadastro-confirmacao" name="password-confirmation" type="password" autocomplete="new-password" minlength="8" required>
+                    <button type="button" data-password-toggle="cadastro-confirmacao" aria-label="Mostrar senha">Mostrar</button>
+                </div>
+
+                <button type="submit">Criar conta</button>
+                <div class="auth-links center">
+                    <span>Já tem uma conta? <button class="auth-link" type="button" data-mode="login">Entrar</button></span>
+                </div>
+            </form>
+
+            <form id="form-recuperacao" class="auth-form" data-view="recovery" novalidate hidden>
+                <label for="recuperacao-email">E-mail da sua conta</label>
+                <input id="recuperacao-email" name="email" type="email" autocomplete="email" placeholder="voce@exemplo.com" maxlength="254" required>
+                <button type="submit">Enviar link de recuperação</button>
+                <div class="auth-links center">
+                    <button class="auth-link" type="button" data-mode="login">Voltar para entrar</button>
+                </div>
+            </form>
+
+            <form id="form-nova-senha" class="auth-form" data-view="reset" novalidate hidden>
+                <label for="nova-senha">Nova senha</label>
+                <div class="auth-password">
+                    <input id="nova-senha" name="password" type="password" autocomplete="new-password" minlength="8" required>
+                    <button type="button" data-password-toggle="nova-senha" aria-label="Mostrar senha">Mostrar</button>
+                </div>
+                <label for="nova-senha-confirmacao">Confirmar nova senha</label>
+                <div class="auth-password">
+                    <input id="nova-senha-confirmacao" name="password-confirmation" type="password" autocomplete="new-password" minlength="8" required>
+                    <button type="button" data-password-toggle="nova-senha-confirmacao" aria-label="Mostrar senha">Mostrar</button>
+                </div>
+                <button type="submit">Salvar nova senha</button>
+            </form>
+
+            <p class="auth-footer">Sua senha é gerenciada com segurança pelo Supabase Auth.</p>
+        </section>
+    </main>
+</body>
+</html>

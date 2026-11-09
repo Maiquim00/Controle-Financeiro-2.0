@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#f4f7fb">
     <title>Controle Financeiro</title>
     <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script>
+    <script type="module" src="script.js"></script>
 </head>
 <body>
     <header class="topo">
@@ -14,10 +14,15 @@
             <p class="marca">ORGANIZE SEU DINHEIRO</p>
             <h1>💰 Controle Financeiro</h1>
             <p class="subtitulo">Gerencie suas receitas e despesas com clareza.</p>
+            <div class="topo-usuario">
+                <span id="usuario-email"></span>
+                <button id="botao-sair" type="button">Sair</button>
+            </div>
         </div>
     </header>
 
     <main class="container">
+        <p id="mensagem-app" class="mensagem-app" role="status" aria-live="polite" hidden></p>
         <section class="resumo" aria-label="Resumo financeiro">
             <article class="card card-saldo">
                 <h2>Saldo atual</h2>
