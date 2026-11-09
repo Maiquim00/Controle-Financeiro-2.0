@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f4f7fb">
+    <title>Controle Financeiro</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <header class="topo">
+        <div class="topo-conteudo">
+            <p class="marca">ORGANIZE SEU DINHEIRO</p>
+            <h1>💰 Controle Financeiro</h1>
+            <p class="subtitulo">Gerencie suas receitas e despesas com clareza.</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="resumo" aria-label="Resumo financeiro">
+            <article class="card card-saldo">
+                <h2>Saldo atual</h2>
+                <p id="saldo" aria-live="polite">R$ 0,00</p>
+            </article>
+            <article class="card">
+                <h2>Receitas</h2>
+                <p id="receitas" class="valor-receita">R$ 0,00</p>
+            </article>
+            <article class="card">
+                <h2>Despesas</h2>
+                <p id="despesas" class="valor-despesa">R$ 0,00</p>
+            </article>
+        </section>
+
+        <div class="conteudo">
+            <section class="painel transacao">
+                <div class="titulo-secao">
+                    <span class="icone-secao" aria-hidden="true">＋</span>
+                    <div>
+                        <h2>Adicionar transação</h2>
+                        <p>Registre uma receita ou despesa.</p>
+                    </div>
+                </div>
+
+                <form id="form-transacao">
+                    <label for="descricao">Descrição</label>
+                    <input type="text" id="descricao" placeholder="Ex.: Salário" maxlength="80" required>
+
+                    <label for="valor">Valor (R$)</label>
+                    <input type="number" id="valor" placeholder="Ex.: 1500,00" min="0.01" step="0.01" required>
+
+                    <label for="tipo">Tipo</label>
+                    <select id="tipo" required>
+                        <option value="">Selecione o tipo</option>
+                        <option value="receita">Receita</option>
+                        <option value="despesa">Despesa</option>
+                    </select>
+
+                    <label for="categoria">Categoria</label>
+                    <select id="categoria" required>
+                        <option value="">Selecione a categoria</option>
+                        <option value="alimentacao">Alimentação</option>
+                        <option value="transporte">Transporte</option>
+                        <option value="casa">Casa</option>
+                        <option value="lazer">Lazer</option>
+                        <option value="estudos">Estudos</option>
+                        <option value="tecnologia">Tecnologia</option>
+                        <option value="outros">Outros</option>
+                    </select>
+
+                    <button class="botao-adicionar" type="submit">Adicionar transação</button>
+                </form>
+            </section>
+
+            <section class="painel historico">
+                <div class="titulo-secao titulo-historico">
+                    <div>
+                        <h2>Histórico de transações</h2>
+                        <p>Suas movimentações recentes.</p>
+                    </div>
+                </div>
+                <div id="lista-transacoes" aria-live="polite">
+                    <p class="vazio">Nenhuma transação cadastrada.</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <p>Controle Financeiro <span aria-label="copyright">©</span> 2026</p>
+    </footer>
+</body>
+</html>
